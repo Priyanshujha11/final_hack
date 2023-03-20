@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "539949855606",
+    "project_id": "finalwaste",
+    "storage_bucket": "finalwaste.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539949855606:android:5e867edbe0dc4f3a630057",
+        "android_client_info": {
+          "package_name": "com.example.final_hack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539949855606-gtf47a0bgplab5nk6rd7bol1lfo6r144.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7olxh7K5GE6RUf8X9-Q9CjpaFKub1_xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539949855606-gtf47a0bgplab5nk6rd7bol1lfo6r144.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
