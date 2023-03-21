@@ -22,9 +22,14 @@ class _HungerReliefOrganizationScreenState
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
             ),
           ),
           elevation: 0,
@@ -138,6 +143,9 @@ class _HungerReliefOrganizationScreenState
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Text(
               'List of Organizations:',

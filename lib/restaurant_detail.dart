@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RestaurantDetail extends StatefulWidget {
   String name;
@@ -33,9 +34,14 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
             ),
           ),
           elevation: 0,
@@ -153,7 +159,9 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromARGB(255, 38, 51, 197)),
-              onPressed: () {},
+              onPressed: () {
+                launchUrl(Uri.parse('tel:${widget.pho}'));
+              },
               child: Container(
                 height: 50,
                 child: Center(

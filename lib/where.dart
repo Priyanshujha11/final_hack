@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutPage extends StatelessWidget {
@@ -13,9 +14,14 @@ class AboutPage extends StatelessWidget {
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
             ),
           ),
           elevation: 0,
@@ -23,7 +29,7 @@ class AboutPage extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Text(
-              'Human Relief',
+              'About us',
               style: TextStyle(
                 fontSize: 30.0,
                 color: Colors.black,
@@ -100,7 +106,33 @@ class AboutPage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 35,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 38, 51, 197)),
+                              onPressed: () {
+                                launchUrl(Uri.parse('tel:+919955963339'));
+                              },
+                              child: Container(
+                                height: 50,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Contact Now!  ' + "+91-9955-963-339",
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

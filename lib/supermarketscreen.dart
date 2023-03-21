@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupermarketScreen extends StatelessWidget {
   const SupermarketScreen({Key? key}) : super(key: key);
@@ -143,7 +144,10 @@ class SupermarketScreen extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 38, 51, 197)),
-                      onPressed: () {},
+                      onPressed: () {
+                        String phone = 'tel:$pho';
+                        launchUrl(Uri.parse(phone));
+                      },
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -176,9 +180,14 @@ class SupermarketScreen extends StatelessWidget {
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
             ),
           ),
           elevation: 0,

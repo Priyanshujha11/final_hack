@@ -27,7 +27,7 @@ class _AnimalSheltersPageState extends State<AnimalSheltersPage> {
   Future<void> donateToShelter(String shelterKey, String foodItem) async {
     await donationsRef.doc().set({
       'shelter': shelterKey,
-      'foodItem': foodItem,
+      'food': foodItem,
       'timestamp': DateTime.now().toIso8601String(),
     });
     ScaffoldMessenger.of(context).showSnackBar(
@@ -40,13 +40,6 @@ class _AnimalSheltersPageState extends State<AnimalSheltersPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedFoodItem;
-    changeVal(String value) {
-      setState(() {
-        selectedFoodItem = value;
-      });
-    }
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
@@ -54,9 +47,14 @@ class _AnimalSheltersPageState extends State<AnimalSheltersPage> {
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(top: 30),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+              ),
             ),
           ),
           elevation: 0,
@@ -81,7 +79,7 @@ class _AnimalSheltersPageState extends State<AnimalSheltersPage> {
           String shelterName = shelters[index]['name'];
           String shelterLocation = shelters[index]['location'];
           List<dynamic> acceptedItems = shelters[index]['acceptedItems'];
-          selectedFoodItem = acceptedItems[0];
+          String selectedFoodItem = acceptedItems[0].toString();
           print(selectedFoodItem);
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -90,70 +88,68 @@ class _AnimalSheltersPageState extends State<AnimalSheltersPage> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return StatefulBuilder(
-                      builder: (BuildContext context, StateSetter setState) {
-                        return AlertDialog(
-                          title: Text('Donate to $shelterName'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Select the food item to donate:'),
-                              SizedBox(height: 10),
-                              DropdownButton<String>(
-                                value: selectedFoodItem,
-                                isExpanded: true,
-                                items:
-                                    acceptedItems.map<DropdownMenuItem<String>>(
-                                  (item) {
-                                    return DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(item),
-                                    );
-                                  },
-                                ).toList(),
-                                onChanged: (value) {
-                                  setState(
-                                    () {
-                                      selectedFoodItem = value;
-                                    },
+                    return AlertDialog(
+                      title: Text('Donate to $shelterName'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Select the food item to donate:'),
+                          SizedBox(height: 10),
+                          StatefulBuilder(
+                              builder: (context, StateSetter setState) {
+                            return DropdownButton<String>(
+                              value: selectedFoodItem,
+                              isExpanded: true,
+                              items:
+                                  acceptedItems.map<DropdownMenuItem<String>>(
+                                (item) {
+                                  return DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(item),
                                   );
                                 },
-                                hint: Text('Select a food item'),
-                              ),
-                            ],
+                              ).toList(),
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    selectedFoodItem = value!;
+                                  },
+                                );
+                              },
+                              hint: Text('Select a food item'),
+                            );
+                          }),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 38, 51, 197),
+                            ),
                           ),
-                          actions: [
-                            TextButton(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 38, 51, 197),
-                                ),
-                              ),
-                              style: TextButton.styleFrom(
-                                  textStyle: TextStyle(
-                                color: Color.fromARGB(255, 38, 51, 197),
-                              )),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 38, 51, 197),
-                              ),
-                              child: Text('Donate'),
-                              onPressed: selectedFoodItem != null
-                                  ? () async {
-                                      await donateToShelter(shelterKey,
-                                          selectedFoodItem.toString());
-                                      Navigator.of(context).pop();
-                                    }
-                                  : null,
-                            ),
-                          ],
-                        );
-                      },
+                          style: TextButton.styleFrom(
+                              textStyle: TextStyle(
+                            color: Color.fromARGB(255, 38, 51, 197),
+                          )),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 38, 51, 197),
+                          ),
+                          child: Text('Donate'),
+                          onPressed: selectedFoodItem != null
+                              ? () async {
+                                  await donateToShelter(
+                                      shelterKey, selectedFoodItem.toString());
+                                  Navigator.of(context).pop();
+                                }
+                              : null,
+                        ),
+                      ],
                     );
                   },
                 );
